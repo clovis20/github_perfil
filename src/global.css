@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+:root {
+    --corPrincipal: cyan;
+    --corSecundaria: #111;
+    --corTerciaria: rgb(59, 187, 187);
+    --corBranco: white;
+
+}

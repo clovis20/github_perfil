@@ -1,26 +1,54 @@
-import Perfil from './components/Perfil';
-import Formulario from './components/Formulario';
-import ReposList from './components/ReposList';
 import { useState } from 'react';
 
-function App() {
-  const [nomeUsuario, setNomeUsuario] = useState('');
+const App = () => {
+  const [altura, setAltura] = useState("");
+  const [peso, setPeso] = useState("");
+  const [imc, setIMC] = useState("");
+  const [classificacao, setClassificacao] = useState("");
+
+  const calcularIMC = () => {
+    const alturaMetros = altura / 100;
+    const imcCalculado = peso / (alturaMetros * alturaMetros);
+    setIMC(imcCalculado.toFixed(2));
+
+    if (imcCalculado < 18.5) {
+      setClassificacao("Abaixo do peso");
+    } else if (imcCalculado >= 18.5 && imcCalculado < 25) {
+      setClassificacao("Peso normal");
+    } else if (imcCalculado >= 25 && imcCalculado < 30) {
+      setClassificacao("Sobrepeso");
+    } else if (imcCalculado >= 30 && imcCalculado < 35) {
+      setClassificacao("Obesidade Grau 1");
+    } else if (imcCalculado >= 35 && imcCalculado < 40) {
+      setClassificacao("Obesidade Grau 2");
+    } else {
+      setClassificacao("Obesidade Grau 3");
+    }
+  };
 
   return (
-    <>
-      <input type="text" onBlur={(e) => setNomeUsuario(e.target.value)} />
+    <div>
+      <h1>Calculadora de IMC</h1>
+      <label htmlFor="altura">Altura (cm):</label>
+      <input type="number" id="altura" value={altura}
+        onChange={(e) => setAltura(e.target.value)}
+      />
 
-    {nomeUsuario.length > 4 && (
-      <>
-        <Perfil nomeUsuario={nomeUsuario}/>
-        <ReposList nomeUsuario={nomeUsuario}/>
-      </>
-    )}
+      <label htmlFor="peso">Peso (kg):</label>
+      <input type="number" id="peso" value={peso}
+        onChange={(e) => setPeso(e.target.value)}
+      />
 
-    <Formulario />
-    
-    </>
-  )
-}
+      <button onClick={calcularIMC}>Calcular</button>
 
-export default App
+      {imc && (
+        <div>
+          <h2>Seu IMC: {imc}</h2>
+          <p>Classificação: {classificacao}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
